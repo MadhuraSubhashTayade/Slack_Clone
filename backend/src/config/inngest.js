@@ -26,6 +26,7 @@ const deleteUserFromDB = inngest.createFunction(
   { id: "delete-user-from-db" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
+    await connectDb(); // since we are using Vercel (serverless) deployment, connecting to db before each operation is needeed
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
   }
